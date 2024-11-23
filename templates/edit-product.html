@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa sản phẩm</title>
+    <link rel="stylesheet" type="text/css" href="/css/styleEdit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Chỉnh sửa sản phẩm</h1>
+
+        <!-- Form Chỉnh sửa sản phẩm -->
+        <form th:action="@{/update-product}" method="post">
+            <!-- ID Sản phẩm ẩn -->
+            <input type="hidden" name="productId" th:value="${product.id}"/>
+
+            <label for="productCode">Mã sản phẩm:</label>
+            <input type="text" id="productCode" name="productCode" th:value="${product.code}" required><br><br>
+
+            <label for="productName">Tên sản phẩm:</label>
+            <input type="text" id="productName" name="productName" th:value="${product.name}" required><br><br>
+
+            <label for="productDescription">Mô tả:</label>
+            <textarea id="productDescription" name="productDescription" required th:text="${product.description}"></textarea><br><br>
+            
+             <!-- Thêm trường ngày đăng ký hoặc ngày cập nhật sản phẩm -->
+            <label for="productDate">Ngày đăng ký:</label>
+            <input type="date" id="productDate" name="productDate" th:value="${product.registerDate}" required><br><br>
+            
+
+            <label for="productPrice">Giá:</label>
+            <input type="number" id="productPrice" name="productPrice" th:value="${product.price}" required><br><br>
+
+            <label for="productCategory">Danh mục:</label>
+            <select id="productCategory" name="productCategory" required>
+                <option value="" disabled selected>-- Chọn danh mục --</option>
+                <option th:each="category : ${categories}" 
+                        th:value="${category.id}" 
+                        th:text="${category.name}" 
+                        th:selected="${category.id == product.category.id}">
+                </option>
+            </select><br><br>
+
+            <label for="productStatus">Trạng thái:</label>
+            <select id="productStatus" name="productStatus" required>
+                <option value="true" th:selected="${product.isActive}">Active</option>
+                <option value="false" th:selected="${not product.isActive}">Not Active</option>
+            </select><br><br>
+
+            <button type="submit">Lưu thay đổi</button>
+        </form>
+
+        <!-- Nút quay lại trang quản lý sản phẩm -->
+        <br>
+        <a href="/">Trở về danh sách sản phẩm</a>
+    </div>
+</body>
+</html>
